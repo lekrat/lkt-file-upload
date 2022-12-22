@@ -2,6 +2,8 @@
 
 namespace FileUpload;
 
+use FileUpload\Enums\MimeType;
+
 class File extends \SplFileInfo
 {
     /**
@@ -66,7 +68,7 @@ class File extends \SplFileInfo
     {
         return in_array(
             $this->mimeType,
-            ['image/gif', 'image/jpeg', 'image/pjpeg', 'image/png']
+            [MimeType::gif, MimeType::jpeg, MimeType::pjpeg, MimeType::png, MimeType::avif, MimeType::svg, MimeType::webp, MimeType::apng]
         );
     }
 }
