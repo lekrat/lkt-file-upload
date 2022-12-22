@@ -48,7 +48,7 @@ class Random implements FileNameGenerator
         $this->filesystem = $upload->getFileSystem();
         $extension = pathinfo($source_name, PATHINFO_EXTENSION);
 
-        return ($this->getUniqueFilename($source_name, $type, $index, $content_range, $extension));
+        return ($this->getUniqueFilename($content_range, $extension));
     }
 
     /**
@@ -60,7 +60,7 @@ class Random implements FileNameGenerator
      * @param  string  $extension
      * @return string
      */
-    protected function getUniqueFilename(string $name, string $type, int $index, array $content_range, string $extension): string
+    protected function getUniqueFilename(array $content_range, string $extension): string
     {
         $name = $this->generateRandom() . "." . $extension;
         while ($this->filesystem->isDir($this->pathresolver->getUploadPath($name))) {

@@ -7,7 +7,6 @@ use FileUpload\Util;
 
 class SizeValidator implements Validator
 {
-
     private const FILE_SIZE_IS_TOO_LARGE = 0;
     private const FILE_SIZE_IS_TOO_SMALL = 1;
 
@@ -90,7 +89,7 @@ class SizeValidator implements Validator
     /**
      * {@inheritdoc}
      */
-    public function setErrorMessages(array $messages)
+    public function setErrorMessages(array $messages): void
     {
         foreach ($messages as $key => $value) {
             $this->errorMessages[$key] = $value;
@@ -100,7 +99,7 @@ class SizeValidator implements Validator
     /**
      * {@inheritdoc}
      */
-    public function validate(File $file, $currentSize = null)
+    public function validate(File $file, $currentSize = null): bool
     {
         if ($file->getSize() < $this->minSize) {
             $file->error = $this->errorMessages[self::FILE_SIZE_IS_TOO_SMALL];

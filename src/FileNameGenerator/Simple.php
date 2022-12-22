@@ -37,7 +37,7 @@ class Simple implements FileNameGenerator
         $this->filesystem = $upload->getFileSystem();
         $this->pathresolver = $upload->getPathResolver();
 
-        return ($this->getUniqueFilename($source_name, $type, $index, $content_range));
+        return ($this->getUniqueFilename($source_name, $content_range));
     }
 
     /**
@@ -48,7 +48,7 @@ class Simple implements FileNameGenerator
      * @param  array   $content_range
      * @return string
      */
-    protected function getUniqueFilename(string$name, string $type, int $index, array $content_range): string
+    protected function getUniqueFilename(string $name, array $content_range): string
     {
         if (! is_array($content_range)) {
             $content_range = [0];

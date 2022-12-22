@@ -21,7 +21,7 @@ class Slug implements FileNameGenerator
         $this->pathResolver = $upload->getPathResolver();
 
         $source_name = $this->getSluggedFileName($source_name);
-        $uniqueFileName = $this->getUniqueFilename($source_name, $type, $index, $content_range);
+        $uniqueFileName = $this->getUniqueFilename($source_name, $content_range);
 
         return $this->getSluggedFileName($uniqueFileName);
     }
@@ -29,7 +29,7 @@ class Slug implements FileNameGenerator
     /**
      * Get unique but consistent name
      */
-    protected function getUniqueFilename(string $name, string $type, int $index, array $content_range): string
+    protected function getUniqueFilename(string $name, array $content_range): string
     {
         if (! is_array($content_range)) {
             $content_range = [0];

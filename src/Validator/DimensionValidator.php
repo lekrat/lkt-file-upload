@@ -39,7 +39,7 @@ class DimensionValidator implements Validator
         $this->config = $config;
     }
 
-    public function setErrorMessages(array $message)
+    public function setErrorMessages(array $message): void
     {
         foreach ($message as $key => $value) {
             $this->errorMessages[$key] = $value;
@@ -48,10 +48,8 @@ class DimensionValidator implements Validator
 
     public function validate(File $file, $currentSize = null): bool
     {
-
         if (! $file->isImage() || ! list($width, $height) = getimagesize($file->getRealPath())) {
             $file->error = $this->errorMessages[self::INVALID_UPLOADED_FILE_TYPE];
-
             return false;
         }
 

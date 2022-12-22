@@ -6,17 +6,15 @@ class Simple implements PathResolver
 {
     /**
      * Main path
-     * @var string
      */
-    protected $main_path;
+    protected string $mainPath;
 
     /**
      * A construct to remember
-     * @param string $main_path Where files should be stored
      */
-    public function __construct($main_path)
+    public function __construct(string $main_path)
     {
-        $this->main_path = $main_path;
+        $this->mainPath = $main_path;
     }
 
     /**
@@ -24,7 +22,7 @@ class Simple implements PathResolver
      */
     public function getUploadPath(?string $name = null): string
     {
-        return $this->main_path . '/' . $name;
+        return $this->mainPath . '/' . $name;
     }
 
     /**

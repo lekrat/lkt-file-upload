@@ -68,7 +68,7 @@ class File extends \SplFileInfo
     {
         return in_array(
             $this->mimeType,
-            [MimeType::gif, MimeType::jpeg, MimeType::pjpeg, MimeType::png, MimeType::avif, MimeType::svg, MimeType::webp, MimeType::apng]
+            [MimeType::jpeg,  MimeType::png, MimeType::svg, MimeType::gif, MimeType::pjpeg,MimeType::avif, MimeType::webp, MimeType::apng]
         );
     }
 }

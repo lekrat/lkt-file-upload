@@ -63,7 +63,7 @@ class Simple implements Validator
     /**
      * {@inheritdoc}
      */
-    public function setErrorMessages(array $new_messages)
+    public function setErrorMessages(array $new_messages): void
     {
         foreach ($new_messages as $key => $value) {
             $this->messages[$key] = $value;

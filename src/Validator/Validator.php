@@ -11,7 +11,7 @@ interface Validator
      * @param array $messages
      * @return void
      */
-    public function setErrorMessages(array $messages);
+    public function setErrorMessages(array $messages): void;
 
     /**
      * Validate upload
@@ -19,5 +19,5 @@ interface Validator
      * @param  null|int $current_size
      * @return bool
      */
-    public function validate(File $file, $current_size = null);
+    public function validate(File $file, $current_size = null): bool;
 }
