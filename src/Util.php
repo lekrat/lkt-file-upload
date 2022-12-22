@@ -4,7 +4,6 @@ namespace FileUpload;
 
 class Util
 {
-
     /**
      * Convert human readable file size (e.g. "10K" or "3M") into bytes
      *
@@ -22,9 +21,9 @@ class Util
         ];
         $unit = strtolower(substr($input, -1));
         if (isset($units[$unit])) {
-            return ($number * $units[$unit]);
+            return $number * $units[$unit];
         } else {
-            return (null);
+            return null;
         }
     }
 
@@ -36,7 +35,6 @@ class Util
 
     public static function fixIntegerOverflow($int)
     {
-
         if ($int < 0) {
             $int += 2.0 * (PHP_INT_MAX + 1);
         }

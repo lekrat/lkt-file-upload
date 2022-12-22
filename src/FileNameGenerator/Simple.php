@@ -48,7 +48,7 @@ class Simple implements FileNameGenerator
      * @param  array   $content_range
      * @return string
      */
-    protected function getUniqueFilename(string$name, string $type, int $index, array $content_range)
+    protected function getUniqueFilename(string$name, string $type, int $index, array $content_range): string
     {
         if (! is_array($content_range)) {
             $content_range = [0];

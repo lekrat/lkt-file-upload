@@ -378,7 +378,7 @@ class FileUpload
      * @param  integer $index
      * @return boolean
      */
-    protected function validate($tmp_name, File $file, $error, $index)
+    protected function validate($tmp_name, File $file, $error, $index): bool
     {
         $this->processCallbacksFor('beforeValidation', $file);
 
@@ -423,11 +423,8 @@ class FileUpload
 
     /**
      * Process callbacks for a given event
-     * @param string $eventName
-     * @param File   $file
-     * @return void
      */
-    protected function processCallbacksFor($eventName, File $file)
+    protected function processCallbacksFor(string $eventName, File $file): void
     {
         if (! array_key_exists($eventName, $this->callbacks) || empty($this->callbacks[$eventName])) {
             return;
@@ -440,19 +437,16 @@ class FileUpload
 
     /**
      * Get an error message
-     * @param  int $code
-     * @return string
      */
-    public function getMessage($code)
+    public function getMessage(int $code): string
     {
         return $this->messages[((string)$code)];
     }
 
     /**
      * Content-length header
-     * @return integer
      */
-    protected function getContentLength()
+    protected function getContentLength(): ?int
     {
         return isset($this->server['CONTENT_LENGTH']) ? $this->server['CONTENT_LENGTH'] : null;
     }
@@ -462,7 +456,7 @@ class FileUpload
      * @param  string $val
      * @return float
      */
-    protected function getConfigBytes($val)
+    protected function getConfigBytes(string $val): float|int
     {
         $val = trim($val);
         $bytes = (int)(substr($val, 0, -1));
@@ -486,7 +480,7 @@ class FileUpload
      * @param  boolean $clear_cache
      * @return float
      */
-    protected function getFilesize($path, $clear_cache = false)
+    protected function getFilesize(string $path, bool $clear_cache = false): float|int
     {
         if ($clear_cache) {
             $this->filesystem->clearStatCache($path);
@@ -497,9 +491,8 @@ class FileUpload
 
     /**
      * Content-type header
-     * @return string
      */
-    protected function getContentType()
+    protected function getContentType(): ?string
     {
         return isset($this->server['CONTENT_TYPE']) ? $this->server['CONTENT_TYPE'] : null;
     }
