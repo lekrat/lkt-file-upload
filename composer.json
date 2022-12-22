@@ -1,6 +1,7 @@
 {
   "name": "lkt/fileupload",
   "description": "File uploading library capable of handling large/chunked/multiple file uploads",
+  "version": "1.0.0",
   "license": "MIT",
   "autoload": {
     "psr-4": {
