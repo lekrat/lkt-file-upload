@@ -11,21 +11,18 @@ class MimeTypeValidator implements Validator
 
     /**
      * List of mimetypes to be considered valid
-     * @var array
      */
-    protected $mimeTypes;
+    protected array $mimeTypes;
 
     /**
      * Determines if the upload was successful or nay
-     * @var bool
      */
-    protected $isValid;
+    protected bool $isValid;
 
     /**
      * Default error message for this Validator
-     * @var array
      */
-    protected $errorMessages = [
+    protected array $errorMessages = [
         self::INVALID_MIMETYPE => "The uploaded filetype (mimetype) is invalid"
     ];
 
@@ -49,7 +46,7 @@ class MimeTypeValidator implements Validator
     /**
      * {@inheritdoc}
      */
-    public function validate(File $file, $currentSize = null)
+    public function validate(File $file, $currentSize = null): bool
     {
         if (! in_array($file->getMimeType(), $this->mimeTypes)) {
             $this->isValid = false;

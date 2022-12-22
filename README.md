@@ -40,16 +40,16 @@ You can grep the source code for `TODO` to find things you could help finishing.
 
 ```php
 // Simple validation (max file size 2MB and only two allowed mime types)
-$validator = new FileUpload\Validator\Simple('2M', ['image/png', 'image/jpg']);
+$validator = new Validator\Simple('2M', ['image/png', 'image/jpg']);
 
 // Simple path resolver, where uploads will be put
-$pathresolver = new FileUpload\PathResolver\Simple('/my/uploads/dir');
+$pathresolver = new PathResolver\Simple('/my/uploads/dir');
 
 // The machine's filesystem
-$filesystem = new FileUpload\FileSystem\Simple();
+$filesystem = new FileSystem\Simple();
 
 // FileUploader itself
-$fileupload = new FileUpload\FileUpload($_FILES['files'], $_SERVER);
+$fileupload = new \FileUpload($_FILES['files'], $_SERVER);
 
 // Adding it all together. Note that you can use multiple validators or none at all
 $fileupload->setPathResolver($pathresolver);
@@ -84,8 +84,8 @@ $factory = new FileUploadFactory(
     new PathResolver\Simple('/my/uploads/dir'), 
     new FileSystem\Simple(), 
     [
-        new FileUpload\Validator\MimeTypeValidator(['image/png', 'image/jpg']),
-        new FileUpload\Validator\SizeValidator('3M', '1M') 
+        new Validator\MimeTypeValidator(['image/png', 'image/jpg']),
+        new Validator\SizeValidator('3M', '1M') 
         // etc
     ]
 );
@@ -98,24 +98,28 @@ $instance = $factory->create($_FILES['files'], $_SERVER);
 There are currently 4 validators shipped with `FileUpload`:
 
  - `Simple`
+
  ```php
  // Simple validation (max file size 2MB and only two allowed mime types)
- $validator = new FileUpload\Validator\Simple('2M', ['image/png', 'image/jpg']);
+ $validator = new Validator\Simple('2M', ['image/png', 'image/jpg']);
 
  ```
 
- - `MimeTypeValidator` 
+ - `MimeTypeValidator`
+
  ```php
- $mimeTypeValidator = new FileUpload\Validator\MimeTypeValidator(['image/png', 'image/jpg']);
+ $mimeTypeValidator = new Validator\MimeTypeValidator(['image/png', 'image/jpg']);
  ```
 
  - `SizeValidator`
+
  ```php
  // The 1st parameter is the maximum size while the 2nd is the minimum size
- $sizeValidator = new FileUpload\Validator\SizeValidator('3M', '1M');
+ $sizeValidator = new Validator\SizeValidator('3M', '1M');
  ```
 
  - `DimensionValidator`
+
  ```php
  $config = [
       'width' => 400,
@@ -123,7 +127,7 @@ There are currently 4 validators shipped with `FileUpload`:
  ]; 
  // Can also contain 'min_width', 'max_width', 'min_height' and 'max_height'
 
- $dimensionValidator = new FileUpload\Validator\DimensionValidator($config);
+ $dimensionValidator = new Validator\DimensionValidator($config);
  ```
 
 > Remember to register new validator(s) by `$fileuploadInstance->addValidator($validator);`
@@ -141,41 +145,46 @@ Here is a listing of the possible values (B => B; KB => K; MB => M; GB => G). Th
 With the `FileNameGenerator` you have the possibility to change the filename the uploaded files will be saved as.
 
 ```php
-$fileupload = new FileUpload\FileUpload($_FILES['files'], $_SERVER);
-$filenamegenerator = new FileUpload\FileNameGenerator\Simple();
+$fileupload = new \FileUpload($_FILES['files'], $_SERVER);
+$filenamegenerator = new FileNameGenerator\Simple();
 $fileupload->setFileNameGenerator($filenamegenerator);
 ```
 
 - `Custom`
+
 ```php
-$customGenerator = new FileUpload\FileNameGenerator\Custom($provider);
+$customGenerator = new FileNameGenerator\Custom($provider);
 //$provider can be a string (in which case it is returned as is)
 //It can also be a callable or a closure which receives arguments in the other of $source_name, $type, $tmp_name, $index, $content_range, FileUpload $upload
 ```
 
 - `MD5`
+
 ```php
-$md5Generator = new FileUpload\FileNameGenerator\MD5($allowOverride);
+$md5Generator = new FileNameGenerator\MD5($allowOverride);
 //$allowOverride should be a boolean. A true value would overwrite the file if it exists while a false value would not allow the file to be uploaded since it already exists.
 ```
 
 - `Random`
+
 ```php
-$randomGenerator = new FileUpload\FileNameGenerator\Random($length);
+$randomGenerator = new FileNameGenerator\Random($length);
 //Where $length is the maximum length of the generator random name
 
 ```
 
 - `Simple`
+
 ```php
-$simpleGenerator = new FileUpload\FileNameGenerator\Simple();
+$simpleGenerator = new FileNameGenerator\Simple();
 //Saves a file by it's original name
 
 ```
 
 - `Slug`
+
 ```php
-$slugGenerator = new FileUpload\FileNameGenerator\Slug();
+$slugGenerator = new FileNameGenerator\Slug();
 //This generator slugifies the name of the uploaded file(s)
 ```
 > Remember to register new validator(s) by `$fileuploadInstance->setFileNameGenerator($generator);`
@@ -187,22 +196,25 @@ $slugGenerator = new FileUpload\FileNameGenerator\Slug();
 Currently implemented events:
 
 - `completed`
+
 ```php
-$fileupload->addCallback('completed', function(FileUpload\File $file) {
+$fileupload->addCallback('completed', function(\File $file) {
     // Whoosh!
 });
 ```
 
 - `beforeValidation`
+
 ```php
-$fileUploader->addCallback('beforeValidation', function (FileUpload\File $file) {
+$fileUploader->addCallback('beforeValidation', function (\File $file) {
     // About to validate the upload;
 });
 ```
 
 - `afterValidation`
+
 ```php
-$fileUploader->addCallback('afterValidation', function (FileUpload\File $file) {
+$fileUploader->addCallback('afterValidation', function (\File $file) {
     // Yay, we got only valid uploads
 });
 ```

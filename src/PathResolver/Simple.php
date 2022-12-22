@@ -22,7 +22,7 @@ class Simple implements PathResolver
     /**
      * @see PathResolver
      */
-    public function getUploadPath($name = null)
+    public function getUploadPath(?string $name = null): string
     {
         return $this->main_path . '/' . $name;
     }
@@ -30,7 +30,7 @@ class Simple implements PathResolver
     /**
      * @see PathResolver
      */
-    public function upcountName($name)
+    public function upcountName(?string $name): string
     {
         return preg_replace_callback('/(?:(?: \(([\d]+)\))?(\.[^.]+))?$/', function ($matches) {
             $index = isset($matches[1]) ? intval($matches[1]) + 1 : 1;

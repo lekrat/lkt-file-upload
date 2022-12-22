@@ -2,6 +2,7 @@
 
 namespace FileUpload;
 
+use FileUpload;
 use PHPUnit\Framework\TestCase;
 
 class FileUploadTest extends TestCase
@@ -35,8 +36,8 @@ class FileUploadTest extends TestCase
         $server = ['CONTENT_TYPE' => 'image/jpg', 'CONTENT_LENGTH' => 30321];
         $file = ['tmp_name' => $playground_path . '/real-image.jpg', 'name' => 'real-image.jpg', 'size' => 30321, 'type' => 'image/jpg', 'error' => 0];
 
-        $filesystem = new FileSystem\Mock();
-        $resolver = new PathResolver\Simple($playground_path . '/uploaded');
+        $filesystem = new \FileSystem\Mock();
+        $resolver = new \PathResolver\Simple($playground_path . '/uploaded');
         $uploader = new FileUpload($file, $server);
         $test = false;
 

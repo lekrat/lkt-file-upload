@@ -2,6 +2,7 @@
 
 namespace FileUpload\PathResolver;
 
+use PathResolver\Simple;
 use PHPUnit\Framework\TestCase;
 
 class SimpleTest extends TestCase

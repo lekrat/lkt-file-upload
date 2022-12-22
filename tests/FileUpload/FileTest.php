@@ -3,6 +3,7 @@
 namespace FileUpload;
 
 use Exception;
+use File;
 use PHPUnit\Framework\TestCase;
 
 class FileTest extends TestCase

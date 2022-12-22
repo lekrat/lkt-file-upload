@@ -2,6 +2,7 @@
 
 namespace FileUpload\FileSystem;
 
+use FileSystem\Simple;
 use PHPUnit\Framework\TestCase;
 
 class SimpleTest extends TestCase

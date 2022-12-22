@@ -1,9 +1,10 @@
 <?php
 
-
 namespace FileUpload\FileNameGenerator;
 
+use FileUpload\FileSystem\FileSystem;
 use FileUpload\FileUpload;
+use FileUpload\PathResolver\PathResolver;
 use FileUpload\Util;
 
 class Random implements FileNameGenerator
@@ -11,9 +12,8 @@ class Random implements FileNameGenerator
 
     /**
      * Maximum length of the filename
-     * @var int
      */
-    private $name_length = 32;
+    private int $name_length = 32;
 
     /**
      * Pathresolver
@@ -27,22 +27,22 @@ class Random implements FileNameGenerator
      */
     private $filesystem;
 
-    public function __construct($name_length = 32)
+    public function __construct(int $name_length = 32)
     {
         $this->name_length = $name_length;
     }
 
     /**
      * Get file_name
-     * @param  string     $source_name
-     * @param  string     $type
-     * @param  string     $tmp_name
-     * @param  integer    $index
-     * @param  string     $content_range
+     * @param string $source_name
+     * @param string $type
+     * @param string $tmp_name
+     * @param integer $index
+     * @param string $content_range
      * @param  FileUpload $upload
      * @return string
      */
-    public function getFileName($source_name, $type, $tmp_name, $index, $content_range, FileUpload $upload)
+    public function getFileName(string $source_name, string $type, string $tmp_name, int $index, array $content_range, FileUpload $upload): string
     {
         $this->pathresolver = $upload->getPathResolver();
         $this->filesystem = $upload->getFileSystem();
@@ -60,7 +60,7 @@ class Random implements FileNameGenerator
      * @param  string  $extension
      * @return string
      */
-    protected function getUniqueFilename($name, $type, $index, $content_range, $extension)
+    protected function getUniqueFilename(string $name, string $type, int $index, array $content_range, string $extension): string
     {
         $name = $this->generateRandom() . "." . $extension;
         while ($this->filesystem->isDir($this->pathresolver->getUploadPath($name))) {
@@ -80,11 +80,11 @@ class Random implements FileNameGenerator
         return $name;
     }
 
-    protected function generateRandom()
+    protected function generateRandom(): string
     {
         return substr(
             str_shuffle(
-                "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
             ),
             0,
             $this->name_length

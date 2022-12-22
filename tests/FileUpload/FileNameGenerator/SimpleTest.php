@@ -2,10 +2,10 @@
 
 namespace FileUpload\FileNameGenerator;
 
-use FileUpload\FileNameGenerator\Simple as SimpleGenerator;
-use FileUpload\FileSystem\Mock;
-use FileUpload\FileUpload;
-use FileUpload\PathResolver\Simple;
+use FileNameGenerator\Simple as SimpleGenerator;
+use FileSystem\Mock;
+use FileUpload;
+use PathResolver\Simple;
 use PHPUnit\Framework\TestCase;
 
 class SimpleTest extends TestCase

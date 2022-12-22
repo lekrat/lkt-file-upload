@@ -1,6 +1,5 @@
 <?php
 
-
 namespace FileUpload\FileNameGenerator;
 
 use Closure;
@@ -8,20 +7,15 @@ use FileUpload\FileUpload;
 
 class Custom implements FileNameGenerator
 {
-
     protected $generator;
 
-    /**
-     * @param string|callable|Closure $nameGenerator
-     */
-    public function __construct($nameGenerator)
+    public function __construct(callable|Closure|string $nameGenerator)
     {
         $this->generator = $nameGenerator;
     }
 
-    public function getFileName($source_name, $type, $tmp_name, $index, $content_range, FileUpload $upload)
+    public function getFileName(string $source_name, string $type, string $tmp_name, int $index, array $content_range, FileUpload $upload): string
     {
-
         if (is_string($this->generator) && ! is_callable($this->generator)) {
             return $this->generator;
         }

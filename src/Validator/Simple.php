@@ -16,17 +16,17 @@ class Simple implements Validator
      * Max allowed file size
      * @var integer
      */
-    protected $max_size;
+    protected int $max_size;
     /**
      * Allowed mime types
      * @var array
      */
-    protected $allowed_types;
+    protected array $allowed_types;
     /**
      * Error messages
      * @var array
      */
-    protected $messages = [
+    protected array $messages = [
         self::UPLOAD_ERR_BAD_TYPE => 'Filetype not allowed',
         self::UPLOAD_ERR_TOO_LARGE => 'Filesize too large',
     ];
@@ -73,7 +73,7 @@ class Simple implements Validator
     /**
      * {@inheritdoc}
      */
-    public function validate(File $file, $current_size = null)
+    public function validate(File $file, $current_size = null): bool
     {
         if (! empty($this->allowed_types)) {
             if (! in_array($file->getMimeType(), $this->allowed_types)) {

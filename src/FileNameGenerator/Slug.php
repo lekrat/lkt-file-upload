@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: decola
- * Date: 11.07.14
- * Time: 14:00
- */
 
 namespace FileUpload\FileNameGenerator;
 
@@ -15,33 +9,16 @@ use FileUpload\Util;
 
 class Slug implements FileNameGenerator
 {
-
-    /**
-     * Pathresolver
-     * @var PathResolver
-     */
-    private $pathresolver;
-
-    /**
-     * Filesystem
-     * @var FileSystem
-     */
-    private $filesystem;
+    private PathResolver $pathResolver;
+    private FileSystem $filesystem;
 
     /**
      * Get file_name
-     * @param  string       $source_name
-     * @param  string       $type
-     * @param  string       $tmp_name
-     * @param  integer      $index
-     * @param  string       $content_range
-     * @param  FileUpload   $upload
-     * @return string
      */
-    public function getFileName($source_name, $type, $tmp_name, $index, $content_range, FileUpload $upload)
+    public function getFileName(string $source_name, string $type, string $tmp_name, int $index, array $content_range, FileUpload $upload): string
     {
         $this->filesystem = $upload->getFileSystem();
-        $this->pathresolver = $upload->getPathResolver();
+        $this->pathResolver = $upload->getPathResolver();
 
         $source_name = $this->getSluggedFileName($source_name);
         $uniqueFileName = $this->getUniqueFilename($source_name, $type, $index, $content_range);
@@ -51,41 +28,31 @@ class Slug implements FileNameGenerator
 
     /**
      * Get unique but consistent name
-     * @param  string  $name
-     * @param  string  $type
-     * @param  integer $index
-     * @param  array   $content_range
-     * @return string
      */
-    protected function getUniqueFilename($name, $type, $index, $content_range)
+    protected function getUniqueFilename(string $name, string $type, int $index, array $content_range): string
     {
         if (! is_array($content_range)) {
             $content_range = [0];
         }
 
-        while ($this->filesystem->isDir($this->pathresolver->getUploadPath($this->getSluggedFileName($name)))) {
-            $name = $this->pathresolver->upcountName($name);
+        while ($this->filesystem->isDir($this->pathResolver->getUploadPath($this->getSluggedFileName($name)))) {
+            $name = $this->pathResolver->upcountName($name);
         }
 
         $uploaded_bytes = Util::fixIntegerOverflow(intval($content_range[1] ?? $content_range[0]));
 
-        while ($this->filesystem->isFile($this->pathresolver->getUploadPath($this->getSluggedFileName($name)))) {
-            if ($uploaded_bytes == $this->filesystem->getFilesize($this->pathresolver->getUploadPath($this->getSluggedFileName($name)))) {
+        while ($this->filesystem->isFile($this->pathResolver->getUploadPath($this->getSluggedFileName($name)))) {
+            if ($uploaded_bytes == $this->filesystem->getFilesize($this->pathResolver->getUploadPath($this->getSluggedFileName($name)))) {
                 break;
             }
 
-            $name = $this->pathresolver->upcountName($name);
+            $name = $this->pathResolver->upcountName($name);
         }
 
         return $name;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return string
-     * */
-    public function getSluggedFileName($name)
+    public function getSluggedFileName(string $name): string
     {
         $fileNameExploded = explode(".", $name);
         $extension = array_pop($fileNameExploded);
@@ -94,12 +61,8 @@ class Slug implements FileNameGenerator
         return $this->slugify($fileNameExploded) . "." . $extension;
     }
 
-    /**
-     * @param $text
-     *
-     * @return mixed|string
-     */
-    private function slugify($text)
+
+    private function slugify($text): array|string
     {
         // replace non letter or digits by -
         $text = preg_replace('~[^\\pL\d]+~u', '-', $text);

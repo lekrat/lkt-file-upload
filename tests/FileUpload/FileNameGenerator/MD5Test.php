@@ -2,9 +2,10 @@
 
 namespace FileUpload\FileNameGenerator;
 
-use FileUpload\FileSystem\Mock;
-use FileUpload\FileUpload;
-use FileUpload\PathResolver\Simple as Path;
+use FileNameGenerator\MD5;
+use FileSystem\Mock;
+use FileUpload;
+use PathResolver\Simple as Path;
 use PHPUnit\Framework\TestCase;
 
 class MD5Test extends TestCase

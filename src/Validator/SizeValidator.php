@@ -8,8 +8,8 @@ use FileUpload\Util;
 class SizeValidator implements Validator
 {
 
-    const FILE_SIZE_IS_TOO_LARGE = 0;
-    const FILE_SIZE_IS_TOO_SMALL = 1;
+    private const FILE_SIZE_IS_TOO_LARGE = 0;
+    private const FILE_SIZE_IS_TOO_SMALL = 1;
 
     /**
      * @var int The maximum file size of the uploaded file
@@ -24,9 +24,9 @@ class SizeValidator implements Validator
     /**
      * @var bool Determines the upload status of the file
      */
-    protected $isValid;
+    protected bool $isValid;
 
-    protected $errorMessages = [
+    protected array $errorMessages = [
         self::FILE_SIZE_IS_TOO_LARGE => "The uploaded file is too large",
         self::FILE_SIZE_IS_TOO_SMALL => "The uploaded file is too small"
     ];

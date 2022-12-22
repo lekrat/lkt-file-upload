@@ -6,7 +6,6 @@ use FileUpload\File;
 
 class DimensionValidator implements Validator
 {
-
     const INVALID_UPLOADED_FILE_TYPE = 0;
 
     const WIDTH = 'width';
@@ -47,7 +46,7 @@ class DimensionValidator implements Validator
         }
     }
 
-    public function validate(File $file, $currentSize = null)
+    public function validate(File $file, $currentSize = null): bool
     {
 
         if (! $file->isImage() || ! list($width, $height) = getimagesize($file->getRealPath())) {
@@ -59,7 +58,7 @@ class DimensionValidator implements Validator
         return $this->validateDimensions($file, $width, $height);
     }
 
-    protected function validateDimensions(File $file, $width, $height)
+    protected function validateDimensions(File $file, $width, $height): bool
     {
         $valid = true;
 

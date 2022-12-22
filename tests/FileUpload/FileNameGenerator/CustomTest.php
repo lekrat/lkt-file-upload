@@ -2,9 +2,10 @@
 
 namespace FileUpload\FileNameGenerator;
 
-use FileUpload\FileSystem\Mock;
-use FileUpload\FileUpload;
-use FileUpload\PathResolver\Simple;
+use FileNameGenerator\Custom;
+use FileSystem\Mock;
+use FileUpload;
+use PathResolver\Simple;
 use PHPUnit\Framework\TestCase;
 
 class CustomTest extends TestCase

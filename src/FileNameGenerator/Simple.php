@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: decola
- * Date: 11.07.14
- * Time: 14:00
- */
 
 namespace FileUpload\FileNameGenerator;
 
@@ -30,15 +24,15 @@ class Simple implements FileNameGenerator
 
     /**
      * Get file_name
-     * @param  string     $source_name
-     * @param  string     $type
-     * @param  string     $tmp_name
-     * @param  integer    $index
-     * @param  string     $content_range
+     * @param string $source_name
+     * @param string $type
+     * @param string $tmp_name
+     * @param integer $index
+     * @param string $content_range
      * @param  FileUpload $upload
      * @return string
      */
-    public function getFileName($source_name, $type, $tmp_name, $index, $content_range, FileUpload $upload)
+    public function getFileName(string $source_name, string $type, string $tmp_name, int $index, array $content_range, FileUpload $upload): string
     {
         $this->filesystem = $upload->getFileSystem();
         $this->pathresolver = $upload->getPathResolver();
@@ -54,7 +48,7 @@ class Simple implements FileNameGenerator
      * @param  array   $content_range
      * @return string
      */
-    protected function getUniqueFilename($name, $type, $index, $content_range)
+    protected function getUniqueFilename(string$name, string $type, int $index, array $content_range)
     {
         if (! is_array($content_range)) {
             $content_range = [0];

@@ -1,13 +1,12 @@
 <?php
 
-namespace FileUpload;
 
+namespace FileUpload;
 use FileUpload\FileNameGenerator\FileNameGenerator;
 use FileUpload\FileNameGenerator\Simple;
 use FileUpload\FileSystem\FileSystem;
 use FileUpload\PathResolver\PathResolver;
 use FileUpload\Validator\Validator;
-use Psr\Log\LoggerInterface;
 
 class FileUpload
 {
@@ -46,11 +45,6 @@ class FileUpload
      */
     protected $filesystem;
     /**
-     * Optional logger
-     * @var LoggerInterface
-     */
-    protected $logger;
-    /**
      * File Container instance
      * @var File
      */
@@ -59,17 +53,17 @@ class FileUpload
      * Validators to be run
      * @var array
      */
-    protected $validators = [];
+    protected array $validators = [];
     /**
      * Callbacks to be run
      * @var array
      */
-    protected $callbacks = [];
+    protected array $callbacks = [];
     /**
      * Default messages
      * @var array
      */
-    protected $messages = [
+    protected array $messages = [
         // PHP $_FILES-own
         UPLOAD_ERR_INI_SIZE => 'The uploaded file exceeds the upload_max_filesize directive in php.ini',
         UPLOAD_ERR_FORM_SIZE => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form',
@@ -165,23 +159,6 @@ class FileUpload
     }
 
     /**
-     * @return LoggerInterface
-     */
-    public function getLogger()
-    {
-        return $this->logger;
-    }
-
-    /**
-     * Set logger, optionally
-     * @param LoggerInterface $logger
-     */
-    public function setLogger(LoggerInterface $logger)
-    {
-        $this->logger = $logger;
-    }
-
-    /**
      * Register callback for an event
      * @param string   $event
      * @param \Closure $callback
@@ -213,21 +190,12 @@ class FileUpload
      * Process entire submitted request
      * @return array Files and response headers
      */
-    public function processAll()
+    public function processAll(): array
     {
         $content_range = $this->getContentRange();
         $size = $this->getSize();
         $this->files = [];
         $upload = $this->upload;
-
-        if ($this->logger) {
-            $this->logger->debug('Processing uploads', [
-                'Content-range' => $content_range,
-                'Size' => $size,
-                'Upload array' => $upload,
-                'Server array' => $this->server,
-            ]);
-        }
 
         if ($upload && is_array($upload['tmp_name'])) {
             foreach ($upload['tmp_name'] as $index => $tmp_name) {
@@ -277,7 +245,7 @@ class FileUpload
      * Content-range header
      * @return array
      */
-    protected function getContentRange()
+    protected function getContentRange(): ?array
     {
         return isset($this->server['HTTP_CONTENT_RANGE']) ?
             preg_split('/[^0-9]+/', $this->server['HTTP_CONTENT_RANGE']) : null;
@@ -285,9 +253,8 @@ class FileUpload
 
     /**
      * Request size
-     * @return integer
      */
-    protected function getSize()
+    protected function getSize(): ?int
     {
         $range = $this->getContentRange();
 
@@ -305,7 +272,7 @@ class FileUpload
      * @param  array   $content_range
      * @return File
      */
-    protected function process($tmp_name, $name, $size, $type, $error, $index = 0, $content_range = null)
+    protected function process($tmp_name, $name, $size, $type, $error, $index = 0, $content_range = null): File
     {
         $this->fileContainer = $file = new File($tmp_name, $name);
         $file->name = $this->getFilename($name, $type, $index, $content_range, $tmp_name);
@@ -336,16 +303,6 @@ class FileUpload
 
                 $file_size = $this->getFilesize($file_path, $append_file);
 
-                if ($this->logger) {
-                    $this->logger->debug('Processing ' . $file->name, [
-                        'File path' => $file_path,
-                        'File object' => $file,
-                        'Append to file?' => $append_file,
-                        'File exists?' => $this->filesystem->isFile($file_path),
-                        'File size' => $file_size,
-                    ]);
-                }
-
                 if ($file->size == $file_size) {
                     // Yay, upload is complete!
                     $completed = true;
@@ -372,14 +329,8 @@ class FileUpload
 
     /**
      * Get filename for submitted filename
-     * @param  string  $name
-     * @param  string  $type
-     * @param  integer $index
-     * @param  array   $content_range
-     * @param  string  $tmp_name
-     * @return string
      */
-    protected function getFilename($name, $type, $index, $content_range, $tmp_name)
+    protected function getFilename(string $name, string $type, int $index, array $content_range, string $tmp_name): string
     {
         $name = $this->trimFilename($name, $type, $index, $content_range);
 
@@ -388,13 +339,8 @@ class FileUpload
 
     /**
      * Remove harmful characters from filename
-     * @param  string  $name
-     * @param  string  $type
-     * @param  integer $index
-     * @param  array   $content_range
-     * @return string
      */
-    protected function trimFilename($name, $type, $index, $content_range)
+    protected function trimFilename(string $name, string $type, int $index, array $content_range): string
     {
         $name = trim(basename(stripslashes($name)), ".\x00..\x20");
 
@@ -410,7 +356,7 @@ class FileUpload
      * @param  integer $int
      * @return float
      */
-    protected function fixIntegerOverflow($int)
+    protected function fixIntegerOverflow(int $int): float|int
     {
         if ($int < 0) {
             $int += 2.0 * (PHP_INT_MAX + 1);

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: decola
- * Date: 11.07.14
- * Time: 01:43
- */
 
 namespace FileUpload;
 

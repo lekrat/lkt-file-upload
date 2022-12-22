@@ -2,10 +2,10 @@
 
 namespace FileUpload\FileNameGenerator;
 
-use FileUpload\FileNameGenerator\Slug as SlugGenerator;
-use FileUpload\FileSystem\Mock;
-use FileUpload\FileUpload;
-use FileUpload\PathResolver\Simple;
+use FileNameGenerator\Slug as SlugGenerator;
+use FileSystem\Mock;
+use FileUpload;
+use PathResolver\Simple;
 use PHPUnit\Framework\TestCase;
 
 class SlugTest extends TestCase

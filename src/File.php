@@ -18,22 +18,17 @@ class File extends \SplFileInfo
 
     /**
      * Preset unknown mime type
-     * @var string
      */
-    protected $mimeType = 'application/octet-stream';
+    protected string $mimeType = 'application/octet-stream';
 
-    /**
-     * @var string
-     */
-    protected $clientFileName;
+    protected string $clientFileName;
 
     /**
      * Is the file completely downloaded
-     * @var boolean
      */
-    public $completed = false;
+    public bool $completed = false;
 
-    public function __construct($fileName, $clientFileName = '')
+    public function __construct($fileName, string $clientFileName = '')
     {
         $this->setMimeType($fileName);
         $this->clientFileName = $clientFileName;
@@ -49,14 +44,13 @@ class File extends \SplFileInfo
 
     /**
      * Returns the "original" name of the file
-     * @return string
      */
-    public function getClientFileName()
+    public function getClientFileName(): string
     {
         return $this->clientFileName;
     }
 
-    public function getMimeType()
+    public function getMimeType(): string
     {
         if ($this->getType() !== 'file') {
             throw new \Exception('You cannot get the mimetype for a ' . $this->getType());
@@ -67,9 +61,8 @@ class File extends \SplFileInfo
 
     /**
      * Does this file have an image mime type?
-     * @return boolean
      */
-    public function isImage()
+    public function isImage(): bool
     {
         return in_array(
             $this->mimeType,

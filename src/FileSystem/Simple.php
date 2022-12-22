@@ -2,12 +2,12 @@
 
 namespace FileUpload\FileSystem;
 
-class Mock implements FileSystem
+class Simple implements FileSystem
 {
     /**
      * @see FileSystem
      */
-    public function isFile($path)
+    public function isFile(string $path): bool
     {
         return is_file($path);
     }
@@ -15,7 +15,7 @@ class Mock implements FileSystem
     /**
      * @see FileSystem
      */
-    public function isDir($path)
+    public function isDir(string $path): bool
     {
         return is_dir($path);
     }
@@ -23,15 +23,15 @@ class Mock implements FileSystem
     /**
      * @see FileSystem
      */
-    public function isUploadedFile($path)
+    public function isUploadedFile(string $path): bool
     {
-        return true;
+        return is_uploaded_file($path);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function doesFileExist($path)
+    public function doesFileExist(string $path): bool
     {
         return file_exists($path) ? true : false;
     }
@@ -39,15 +39,15 @@ class Mock implements FileSystem
     /**
      * @see FileSystem
      */
-    public function moveUploadedFile($from_path, $to_path)
+    public function moveUploadedFile(string $from_path, string $to_path): bool
     {
-        return rename($from_path, $to_path);
+        return copy($from_path, $to_path) && unlink($from_path);
     }
 
     /**
      * @see FileSystem
      */
-    public function writeToFile($path, $stream, $append = false)
+    public function writeToFile(string $path, $stream, bool $append = false): bool
     {
         return file_put_contents($path, $stream, $append ? \FILE_APPEND : 0);
     }
@@ -71,7 +71,7 @@ class Mock implements FileSystem
     /**
      * @see FileSystem
      */
-    public function unlink($path)
+    public function unlink(string $path): bool
     {
         return unlink($path);
     }
@@ -79,15 +79,16 @@ class Mock implements FileSystem
     /**
      * @see FileSystem
      */
-    public function clearStatCache($path)
+    public function clearStatCache(string $path): bool
     {
-        return clearstatcache(true, $path);
+        clearstatcache(true, $path);
+        return true;
     }
 
     /**
      * @see FileSystem
      */
-    public function getFilesize($path)
+    public function getFilesize(string $path): int
     {
         return filesize($path);
     }

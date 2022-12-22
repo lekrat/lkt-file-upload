@@ -1,8 +1,8 @@
 <?php
-
 namespace FileUpload;
 
-use FileUpload\FileNameGenerator;
+
+use FileUpload\FileNameGenerator\FileNameGenerator;
 use FileUpload\FileSystem\FileSystem;
 use FileUpload\PathResolver\PathResolver;
 use FileUpload\Validator\Validator;
@@ -29,22 +29,18 @@ class FileUploadFactory
 
     /**
      * FileNameGenerator to be used in the factory
-     * @var FileNameGenerator\FileNameGenerator
+     * @var FileNameGenerator
      */
     protected $fileNameGenerator;
 
     /**
      * Construct new factory with the given modules
-     * @param PathResolver $pathresolver
-     * @param FileSystem $filesystem
-     * @param array $validators
-     * @param FileNameGenerator\FileNameGenerator|null $fileNameGenerator
      */
     public function __construct(
         PathResolver $pathresolver,
         FileSystem $filesystem,
         $validators = [],
-        FileNameGenerator\FileNameGenerator $fileNameGenerator = null
+        ?FileNameGenerator $fileNameGenerator = null
     ) {
         $this->pathresolver = $pathresolver;
         $this->filesystem = $filesystem;
@@ -54,11 +50,8 @@ class FileUploadFactory
 
     /**
      * Create new instance of FileUpload with the preset modules
-     * @param  array $upload
-     * @param  array $server
-     * @return FileUpload
      */
-    public function create($upload, $server)
+    public function create(array $upload, array $server): FileUpload
     {
         $fileupload = new FileUpload($upload, $server);
         $fileupload->setPathResolver($this->pathresolver);

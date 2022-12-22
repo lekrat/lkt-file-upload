@@ -2,8 +2,9 @@
 
 namespace FileUpload\Validator;
 
-use FileUpload\File;
+use File;
 use PHPUnit\Framework\TestCase;
+use Validator\DimensionValidator;
 
 class DimensionValidatorTest extends TestCase
 {

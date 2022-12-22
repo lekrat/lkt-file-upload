@@ -3,8 +3,9 @@
 namespace FileUpload\Validator;
 
 use Exception;
-use FileUpload\File;
+use File;
 use PHPUnit\Framework\TestCase;
+use Validator\Simple;
 
 class SimpleTest extends TestCase
 {
