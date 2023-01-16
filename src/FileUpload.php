@@ -248,7 +248,7 @@ class FileUpload
     protected function getContentRange(): ?array
     {
         return isset($this->server['HTTP_CONTENT_RANGE']) ?
-            preg_split('/[^0-9]+/', $this->server['HTTP_CONTENT_RANGE']) : null;
+            preg_split('/[^0-9]+/', $this->server['HTTP_CONTENT_RANGE']) : [];
     }
 
     /**
@@ -272,7 +272,7 @@ class FileUpload
      * @param  array   $content_range
      * @return File
      */
-    protected function process($tmp_name, $name, $size, $type, $error, $index = 0, $content_range = null): File
+    protected function process($tmp_name, $name, $size, $type, $error, $index = 0, array $content_range = []): File
     {
         $this->fileContainer = $file = new File($tmp_name, $name);
         $file->name = $this->getFilename($name, $type, $index, $content_range, $tmp_name);
