@@ -2,7 +2,7 @@
 
 namespace FileUpload;
 
-use FileUpload\Enums\MimeType;
+use Lkt\MIME;
 
 class File extends \SplFileInfo
 {
@@ -66,9 +66,6 @@ class File extends \SplFileInfo
      */
     public function isImage(): bool
     {
-        return in_array(
-            $this->mimeType,
-            [MimeType::jpeg,  MimeType::png, MimeType::svg, MimeType::gif, MimeType::pjpeg,MimeType::avif, MimeType::webp, MimeType::apng]
-        );
+        return MIME::isImage($this->mimeType);
     }
 }
